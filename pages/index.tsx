@@ -1,10 +1,126 @@
+import React, { useState, useEffect } from 'react';
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.scss'
+import spinner from '../styles/Spinner.module.scss'
+import Moment from 'moment';
+
+const linkprefix : string= 'http://localhost:8080/'
+const apilink : string ='https://hytale.com/api/'
+const Months : string[] = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
 
 const Home: NextPage = () => {
-  return (
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [listPosts, setListPosts] = useState<any[]>([]);
+  const [PostBody, setPostBody] = useState<string>("");
+  const [SearchText, setSearchText] = useState<string>("");
+  const [ShowAll, setShowAll] = useState<boolean>(true);
+  const [YMInt, setYMInt] = useState<number>(24227);
+
+
+  const handleFilterChange=(e:any)=>{setSearchText( e.target.value);}
+
+  function getAllPosts() {
+    setIsLoaded(false);
+    fetch(linkprefix + apilink + 'blog/post/published')
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true)
+          setListPosts(result)
+          setError(null);
+          return
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+          return
+        }
+        )
+    }
+
+    function getYMPosts(year:number, month:number) {
+      setIsLoaded(false);
+      fetch(linkprefix + apilink + 'blog/post/archive/'+year+'/'+month)
+        .then(res => res.json())
+        .then(
+          (result) => {
+            setIsLoaded(true)
+            setListPosts(result)
+            setError(null);
+            return
+          },
+          (error) => {
+            setIsLoaded(true);
+            setError(error);
+            return
+          }
+          )
+      }
+
+    function loadPostBody(slug : string) {
+      setIsLoaded(false);
+      fetch(linkprefix + apilink + 'blog/post/slug/' + slug)
+        .then(res => res.json())
+        .then(
+          (result) => {
+            setIsLoaded(true)
+            setError(null);
+            setPostBody(result.body.replaceAll('data-src', 'src'))
+            return
+          },
+          (error) => {
+            setIsLoaded(true);
+            setError(error);
+            return
+          }
+          )
+      }
+
+    function Post({ slug, title, author, publishedAt, showPost }:{slug:string, title:string, author:string, publishedAt:string, showPost:any}) {
+      return (
+        <div className={styles["post-min"]} onClick={() => showPost(slug)}>
+          <span>{title}</span>
+          <br/>
+          <span>{author}</span>
+          <span style={{float: 'right'}}>{Moment(publishedAt).format('DD.MM.YYYY')}</span>
+        </div>
+      );
+    }
+
+    function filterPost(item:any) {
+      if (!ShowAll) return true;
+      if (item.title.toLowerCase().includes(SearchText.toLowerCase())) return true
+      return false;
+    }
+
+
+    useEffect(() => {UpdatePosts()}, [ShowAll, YMInt])
+
+    function incDecDate(by:number) {
+      setYMInt(YMInt+by);
+      UpdatePosts();
+    }
+
+    async function UpdatePosts() {
+      if (ShowAll) getAllPosts();
+      else getYMPosts(((YMInt-(YMInt%12))/12), (YMInt%12)+1);
+    }
+
+    if (isLoaded === false) return (
+      <svg className={spinner["loader"]} viewBox="0 0 24 24">
+        <circle className={spinner["loader__value"]} cx="12" cy="12" r="10" />
+        <circle className={spinner["loader__value"]} cx="12" cy="12" r="10" />
+        <circle className={spinner["loader__value"]} cx="12" cy="12" r="10" />
+        <circle className={spinner["loader__value"]} cx="12" cy="12" r="10" />
+        <circle className={spinner["loader__value"]} cx="12" cy="12" r="10" />
+        <circle className={spinner["loader__value"]} cx="12" cy="12" r="10" />
+      </svg>
+    )
+
+  else return (
     <div className={styles.container}>
       <Head>
         <title>Create Next App</title>
@@ -14,42 +130,43 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Тест <a href="https://hytale-api.com/">Hytale API</a>!
         </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <br/>
+        <div className={styles["main-container"]}>
+          <div className={styles["sidebar-container"]}>
+            <ul className={styles["accordion"]}>
+              <li>
+                <input type="radio" name ="r" onChange={() => {setShowAll(false); }} defaultChecked = {!ShowAll}/>
+                <h2>По месяцам</h2>
+                <div>
+                  <button onClick={() => {incDecDate(-1);}} className={[styles["reveal-controls"], styles["navigate-right"], styles["enabled"], styles["half-transparent"]].join(' ')} aria-label="next month"><div className={styles["controls-arrow"]}/></button>
+                  <span className={styles["month-year-span"]}>{Months[YMInt%12]} {((YMInt-(YMInt%12))/12).toString()}</span>
+                  <button onClick={() => {incDecDate(1);}} className={[styles["reveal-controls"], styles["navigate-left"], styles["enabled"], styles["half-transparent"]].join(' ')} aria-label="previous month"><div className={styles["controls-arrow"]}/></button>
+                </div>
+              </li>
+              <li>
+                <input type="radio" name ="r" onChange={() => {setShowAll(true);}} defaultChecked = {ShowAll}/>
+                <h2>Все новости</h2>
+                <div>
+                  <input className={styles["search-form-input"]} onChange={handleFilterChange} type="search" name="search" placeholder="Search..." value={SearchText}/>
+                </div>
+              </li>
+            </ul>
+            <div className={styles["posts-container"]}>
+              {(listPosts.filter(filterPost)).map((post) => (
+                    <Post
+                    key = {post.slug}
+                    slug = {post.slug}
+                    author = {post.author}
+                    title = {post.title}
+                    publishedAt = {post.publishedAt}
+                    showPost = {loadPostBody}
+                    />
+              ))}
+            </div>
+          </div>
+          <div className={styles["post-body"]} dangerouslySetInnerHTML={{__html: PostBody}} />
         </div>
       </main>
 

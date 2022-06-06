@@ -1,0 +1,456 @@
+.container {
+  padding: 0 2rem;
+}
+
+.main {
+  min-height: 100vh;
+  padding: 4rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  flex: 1;
+  padding: 2rem 0;
+  border-top: 1px solid #eaeaea;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.title a {
+  color: #0070f3;
+  text-decoration: none;
+}
+
+.title a:hover,
+.title a:focus,
+.title a:active {
+  text-decoration: underline;
+}
+
+.title {
+  margin: 0;
+  line-height: 1.15;
+  font-size: 4rem;
+}
+
+.title,
+.description {
+  text-align: center;
+}
+
+.description {
+  margin: 4rem 0;
+  line-height: 1.5;
+  font-size: 1.5rem;
+}
+
+.code {
+  background: #fafafa;
+  border-radius: 5px;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+.grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+.card {
+  margin: 1rem;
+  padding: 1.5rem;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  max-width: 300px;
+}
+
+.card:hover,
+.card:focus,
+.card:active {
+  color: #0070f3;
+  border-color: #0070f3;
+}
+
+.card h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+}
+
+.card p {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.logo {
+  height: 1em;
+  margin-left: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+
+.main-container {
+  width : 90vw;
+  height: 80vh;
+  display: flex;
+  border: 1px dotted rgba(220,231,235,1);
+}
+
+.sidebar-container {
+  width : 25%;
+  height: 100%;
+  background-color:#fafafa;
+  border-right: 1px dotted rgba(220,231,235,1);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-container {
+$white: #fafafa;
+$grey: rgba(220,231,235,1);
+$red: rgba(255,104,115,1);
+$black: rgba(48,69,92,0.8);
+$sans: 'Titillium Web', sans-serif;
+  
+.transition {
+  transition: all 0.2s ease-in-out
+}
+
+.no-select {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+h1 , h2 {
+  color: $red
+}
+
+h1 {
+  text-transform: uppercase;
+  font-size: 36px;
+  line-height: 42px;
+  letter-spacing: 3px;
+  font-weight: 100;
+}
+h2{
+  font-size: 26px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  display: block;
+  background-color: $white;
+  margin: 0;
+  cursor: pointer;
+  @extend .no-select
+}
+div {
+  color: $black;
+  position: relative;
+  overflow: hidden;
+  height: 0;
+  display: flex;
+  justify-content: space-between;
+  @extend .transition;
+
+
+  margin-top: 0;
+  z-index: 2;
+}
+ul {
+  list-style: none;
+  perspective: 900;
+  padding: 0;
+  margin: 0;
+
+  li {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    padding-bottom: 4px;
+    border-bottom: 1px dotted $grey;
+
+    &:nth-of-type(1) {
+      animation-delay: 0.5s
+    }
+    
+    &:nth-of-type(2) {
+      animation-delay: 0.75s
+    }
+        
+    &:nth-of-type(3) {
+      animation-delay: 1.0s
+    }
+    
+    &:last-of-type {
+      padding-bottom: 0
+    }
+      
+    input[type=radio] {
+      margin: 0;
+      position: absolute;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0;
+      
+      &:checked {
+        &~div {
+          height: 48px;
+        }
+      }
+    }
+  }
+}
+
+@keyframes flipdown {
+  0% {
+    opacity: 0;
+    transform-origin: top center;
+    transform: rotateX(-90deg)
+  }
+  5% {
+    opacity: 1
+  }
+  80% {
+    transform: rotateX(8deg)
+  }
+  83% {
+    transform: rotateX(6deg)
+  }
+  92% {
+    transform: rotateX(-3deg)
+  }
+  100% {
+    transform-origin: top center;
+    transform: rotateX(0deg) 
+  }
+}
+}
+
+
+
+span.month-year-span {
+  font-size: 32px;
+  font-weight: 750;
+}
+
+
+/*********************************************
+ * CONTROLS
+ *********************************************/
+$controlArrowSize: 3em;
+$controlArrowSpacing: 1.4em;
+$controlArrowLength: 1.6em;
+$controlArrowThickness: 0.3em;
+$controlsArrowAngle: 45deg;
+$controlsArrowAngleHover: 40deg;
+$controlsArrowAngleActive: 36deg;
+
+@mixin controlsArrowTransform( $angle ) {
+	&:before {
+		transform: translateX(($controlArrowSize - $controlArrowLength)*0.5) translateY(($controlArrowSize - $controlArrowThickness)*0.5) rotate( $angle );
+	}
+
+	&:after {
+		transform: translateX(($controlArrowSize - $controlArrowLength)*0.5) translateY(($controlArrowSize - $controlArrowThickness)*0.5) rotate( -$angle );
+	}
+}
+
+	button.reveal-controls {
+		padding: 0;
+		background-color: transparent;
+		border: 0;
+		outline: 0;
+		cursor: pointer;
+		color: currentColor;
+		transform: scale(.9999);
+		transition: color 0.2s ease,
+					opacity 0.2s ease,
+					transform 0.2s ease;
+		z-index: 2; // above slides
+		pointer-events: auto;
+		font-size: inherit;
+		visibility: hidden;
+		opacity: 0;
+
+		-webkit-appearance: none;
+		-webkit-tap-highlight-color: rgba( 0, 0, 0, 0 );
+
+
+	.controls-arrow:before,
+	.controls-arrow:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: $controlArrowLength;
+		height: $controlArrowThickness;
+		border-radius: $controlArrowThickness*0.5;
+		background-color: rgb(81, 72, 61);
+
+		transition: all 0.15s ease, background-color 0.8s ease;
+		transform-origin: calc(($controlArrowThickness*0.5)*10) 50%;
+		will-change: transform;
+	}
+
+	.controls-arrow {
+		position: relative;
+		width: $controlArrowSize;
+		height: $controlArrowSize;
+
+		@include controlsArrowTransform( $controlsArrowAngle );
+
+		&:hover {
+			@include controlsArrowTransform( $controlsArrowAngleHover );
+		}
+
+		&:active {
+			@include controlsArrowTransform( $controlsArrowAngleActive );
+		}
+	}
+
+	&.navigate-left {
+		right: $controlArrowSize + $controlArrowSpacing*2;
+		bottom: $controlArrowSpacing + $controlArrowSize*0.5;
+		transform: translateX( -10px );
+	}
+
+	&.navigate-right {
+		right: 0;
+		bottom: $controlArrowSpacing + $controlArrowSize*0.5;
+		transform: translateX( 10px );
+
+		.controls-arrow {
+			transform: rotate( 180deg );
+		}
+	}
+
+	// Any control button that can be clicked is "enabled"
+	&.enabled {
+		visibility: visible;
+		opacity: 1;
+		cursor: pointer;
+		transform: none;
+	}
+	&.half-transparent:before, &.half-transparent:after {
+		background-color: rgb(81, 72, 61)
+	}
+
+	&.enabled:hover{
+		opacity: 1;
+	}
+}
+
+
+/* =================================================================*/
+.search-form-input {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    box-sizing: border-box;
+    font-family: inherit;
+    line-height: 1.15;
+    margin: auto;
+    overflow: visible;
+    outline-offset: -2px;
+    appearance: none;
+    position: relative;
+    width: calc(100% - 8px);
+    height: 42px;
+    padding: 5px 8px 5px 40px;
+    border: none;
+    border-radius: 23px;
+    background-image: url("../public/ic_search.svg");
+    background-position: 15px center;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-color:rgba(48, 69, 92, 0.8);
+    color: rgb(170, 170, 170);
+    font-size: 1.25rem;
+    outline: none;
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    /* Now your own custom styles */
+    background-image: url("../public/x.svg");
+    width: 30px;
+    height: 30px;
+    background-size: 30px;
+    background-repeat: no-repeat;
+  }
+}
+
+/* ================================================================= */
+$grey: rgba(220,231,235,1);
+div.posts-container {
+  width: 100%;
+  height: 100%;
+  display: list-item;
+  overflow-y: scroll;
+  overflow: auto;
+  flex: 1;
+}
+div.post-min {
+  width: 100%;
+  height: 48px;
+  display:block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid $grey;
+  &:hover {
+    filter: invert(100%);
+  }
+}
+
+div.post-body {
+  width: 100%;
+  height: 100%;
+  display: list-item;
+  overflow-y: scroll;
+  overflow: auto;
+  flex: 1;
+}
+
+.post-body > * {
+  margin: 5%;
+}
+
+.post-body > p > img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 90%;
+  margin-left: 5%;
+}
